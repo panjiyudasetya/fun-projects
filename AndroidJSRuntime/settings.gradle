@@ -1,1 +1,1 @@
-include ':app', ':j2v8executor', ':liquid-core'
+include ':app', ':j2v8executor', ':liquid-core', ':rhino'

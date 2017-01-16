@@ -103,7 +103,7 @@ public abstract class JSExecutor {
      * @param jsContext Javascript context
      */
     private static void releaseProperties(@NonNull JSContext jsContext) {
-        if (jsContext.propertyNames() != null && jsContext.propertyNames().length > 1) {
+        if (jsContext.propertyNames() != null && jsContext.propertyNames().length > 0) {
             for (String property : jsContext.propertyNames()) {
                 jsContext.deleteProperty(property);
             }

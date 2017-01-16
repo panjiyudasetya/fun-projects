@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/j2v8executor" />
             <option value="$PROJECT_DIR$/liquid-core" />
+            <option value="$PROJECT_DIR$/rhino" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
