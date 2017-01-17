@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIConfigurations {
     private static final String BASE_URL = "https://andruxnet-random-famous-quotes.p.mashape.com/";
-    protected static QuoteAPI APIService;
+    protected static RestAPI APIService;
 
     public APIConfigurations() {
         init();
@@ -61,7 +61,7 @@ public class APIConfigurations {
                     .build();
 
             // Create API Service
-            APIService = retrofit.create(QuoteAPI.class);
+            APIService = retrofit.create(RestAPI.class);
         }
     }
 }

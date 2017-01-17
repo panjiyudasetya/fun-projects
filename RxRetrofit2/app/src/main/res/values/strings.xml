@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">RxRetrofit2</string>
+    <string name="app_name">QoTD</string>
     <string name="please_wait">Please wait...</string>
+    <string name="title_dashboard">Quote of The Day</string>
 </resources>

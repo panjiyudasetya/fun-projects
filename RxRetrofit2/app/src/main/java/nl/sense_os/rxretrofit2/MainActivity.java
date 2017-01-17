@@ -5,17 +5,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
+import nl.sense_os.rxretrofit2.api.data.Quote;
+import nl.sense_os.rxretrofit2.mvp.quote.QuotePageContract;
+import nl.sense_os.rxretrofit2.mvp.quote.QuotePresenter;
+import nl.sense_os.rxretrofit2.mvp.quote.QuoteUseCase;
 
-import io.reactivex.disposables.CompositeDisposable;
-import nl.sense_os.rxretrofit2.api.APIClient;
-import nl.sense_os.rxretrofit2.api.APIDisposableObserver;
-import nl.sense_os.rxretrofit2.api.response.Quote;
-
-public class MainActivity extends BaseActivity {
-    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
+public class MainActivity extends BaseActivity implements QuotePageContract.View {
     private TextView tvQuote;
     private TextView tvAuthor;
-    private APIClient apiClient;
+
+    private QuotePresenter presenter;
 
     @Override
     public int initWithLayout() {
@@ -23,16 +22,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public String initWithTitle() {
-        return getString(R.string.app_name);
-    }
-
-    @Override
     public View.OnClickListener initWithFabListener() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadQuote();
+                presenter.obtainDataFromAPI();
             }
         };
     }
@@ -40,19 +34,19 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        apiClient = new APIClient();
+        presenter = new QuotePresenter(this, new QuoteUseCase());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        loadQuote();
+        presenter.obtainDataFromAPI();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        compositeDisposable.clear();
+        presenter.release();
     }
 
     @Override
@@ -67,7 +61,7 @@ public class MainActivity extends BaseActivity {
     public void onPreExecuteAPI() {
         setABProgressVisibility(View.VISIBLE);
         enableFab(false);
-        setContentText(null);
+        updateTextWithQuote(null);
     }
 
     @Override
@@ -76,7 +70,8 @@ public class MainActivity extends BaseActivity {
         enableFab(true);
     }
 
-    private void setContentText(@Nullable Quote quote) {
+    @Override
+    public void updateTextWithQuote(@Nullable Quote quote) {
         if (quote == null) {
             tvQuote.setText(getString(R.string.please_wait));
             tvAuthor.setVisibility(View.GONE);
@@ -87,29 +82,8 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void loadQuote() {
-        onPreExecuteAPI();
-        compositeDisposable.add(apiClient.getQuote(new APIDisposableObserver<Quote>() {
-            @Override
-            public void onError(Throwable e) {
-                super.onError(e);
-                showSnackbar(e.getLocalizedMessage());
-            }
-
-            @Override
-            public void onAPIError(@NonNull Exception e) {
-                showSnackbar(e.getMessage());
-            }
-
-            @Override
-            public void onNext(Quote value) {
-                setContentText(value);
-            }
-
-            @Override
-            public void onComplete() {
-                onPostExecuteAPI();
-            }
-        }));
+    @Override
+    public void showMessageWithSnackbar(@NonNull String message) {
+        showMessage(message);
     }
 }

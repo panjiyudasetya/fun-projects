@@ -1,4 +1,4 @@
-package nl.sense_os.rxretrofit2.api.response;
+package nl.sense_os.rxretrofit2.api.data;
 
 import com.google.gson.annotations.SerializedName;
 
