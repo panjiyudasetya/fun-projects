@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroidJSRuntime.iml" filepath="$PROJECT_DIR$/AndroidJSRuntime.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/j2v8executor/j2v8executor.iml" filepath="$PROJECT_DIR$/j2v8executor/j2v8executor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/liquid-core/liquid-core.iml" filepath="$PROJECT_DIR$/liquid-core/liquid-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rhino/rhino.iml" filepath="$PROJECT_DIR$/rhino/rhino.iml" />
+    </modules>
+  </component>
+</project>
