@@ -2,6 +2,7 @@ package nl.sense_os.classaccessibility;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatDrawableManager;
 
 import nl.sense_os.vm_ex_lib.Category;
 import nl.sense_os.vm_ex_lib.Fuel;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         // Some of them are purposely not to visible on the outside, but the others do.
         doSomethingWithMotorcycle();
         doSomethingWithCar();
+
+        AppCompatDrawableManager.get().getDrawable(this, 0);
     }
 
     private void doSomethingWithMotorcycle() {

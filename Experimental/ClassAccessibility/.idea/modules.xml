@@ -4,7 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ClassAccessibility.iml" filepath="$PROJECT_DIR$/ClassAccessibility.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/vehicle-manager-lib/vehicle-manager-lib.iml" filepath="$PROJECT_DIR$/vehicle-manager-lib/vehicle-manager-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/electricity-lib/electricity-lib.iml" filepath="$PROJECT_DIR$/electricity-lib/electricity-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vehicle-lib/vehicle-lib.iml" filepath="$PROJECT_DIR$/vehicle-lib/vehicle-lib.iml" />
     </modules>
   </component>
 </project>
