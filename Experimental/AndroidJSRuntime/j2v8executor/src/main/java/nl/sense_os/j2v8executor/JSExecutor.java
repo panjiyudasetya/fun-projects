@@ -7,6 +7,8 @@ import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Object;
 import com.eclipsesource.v8.utils.MemoryManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -75,18 +77,43 @@ public abstract class JSExecutor {
      * @throws Exception
      */
     private static JSONObject handleScriptResult(@NonNull V8 v8, @NonNull Object scriptResult) throws Exception {
-        // TODO: do we need this check?
-        JSONObject output = new JSONObject();
+        JSONObject output;
         if (scriptResult instanceof V8Object) {
-            V8Object json = v8.getObject("JSON");
-
-            V8Object v8JsScriptResult = (V8Object) scriptResult;
-            V8Array parameters = new V8Array(v8).push(v8JsScriptResult);
-            String result = json.executeStringFunction("stringify", parameters);
-            output = new JSONObject(result);
+            output = jsonifyV8Object(v8, (V8Object) scriptResult);
         } else {
-            output.put("value", String.valueOf(scriptResult));
+            output = new JSONObject().put("value", String.valueOf(scriptResult));
         }
+
+        // TODO : Do we need check the output format ?
         return output;
+    }
+
+    /**
+     * Convert V8Object into JSONObject
+     *
+     * @param v8 {@link V8}Runtime
+     * @param v8Object parse-able {@link V8Object}
+     * @return {@link JSONObject} result
+     * @throws JSONException
+     */
+    private static JSONObject jsonifyV8Object(@NonNull V8 v8, @NonNull V8Object v8Object) throws JSONException {
+        JSONObject result;
+
+        // Get JSON class function inside V8 Object
+        V8Object json = v8.getObject("JSON");
+        // Setup parameters
+        V8Array parameters = new V8Array(v8).push(v8Object);
+        // Call stringify function on V8 json object
+        String stringify = json.executeStringFunction("stringify", parameters);
+
+        // Classify the stringify object either it is a JSONArray or JSONObject
+        String firstChar = String.valueOf(stringify.charAt(0));
+        if (firstChar.equalsIgnoreCase("[")) {
+            JSONArray jsonArray = new JSONArray(stringify);
+            result = new JSONObject().put("value", jsonArray);
+        } else {
+            result = new JSONObject(stringify);
+        }
+        return result;
     }
 }

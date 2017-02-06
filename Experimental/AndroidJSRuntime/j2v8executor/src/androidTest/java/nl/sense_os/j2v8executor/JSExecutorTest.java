@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import io.reactivex.observers.DisposableObserver;
+
 import static nl.sense_os.j2v8executor.JSExecutor.ExecutorListener;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -108,7 +110,26 @@ public class JSExecutorTest {
         });
     }
 
-    /*
+    @Test
+    public void jsRuntimeExecute_Test_4() throws Exception {
+        param = new JSParam(
+                172,
+                10,
+                new FileReader().readFile("test_script_4", "js")
+        );
+        JSExecutor.execute(param, new ExecutorListener() {
+            @Override
+            public void onSuccess(JSONObject result) throws Exception {
+                System.out.println("============================= test 4 : " + result.toString());
+            }
+
+            @Override
+            public void onError(Exception ex) {
+                assertNull(ex);
+            }
+        });
+    }
+
     @Test
     public void jsRuntimeExecute_Rx_Test() throws Exception {
         RxJSExecutor.execute(param, new DisposableObserver<JSONObject>() {
@@ -133,5 +154,4 @@ public class JSExecutorTest {
             }
         });
     }
-    */
 }
